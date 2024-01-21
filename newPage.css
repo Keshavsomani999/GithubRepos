@@ -1,0 +1,101 @@
+
+.card {
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card p h2 {
+    margin: 0;
+    color: #333;
+}
+
+.card button {
+    background-color: #007bff;
+    margin-right: 5px;
+    color: white;
+    padding: 10px;
+}
+
+.card strong {
+    color: #007bff;
+}
+
+#repositories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 50px;
+}
+
+
+.Profilecard {
+    display: flex;
+    align-items: center;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  .rounded-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; 
+  }
+  
+  .info {
+    padding: 0%;
+    margin-left: 25px;
+  }
+  
+  .name {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 5px;
+  }
+  
+  .bio, .location {
+    font-size: 0.85em;
+    margin-bottom: 5px;
+  }
+  
+  .link {
+    
+    text-decoration: none;
+  }
+  
+
+  .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin-right: 10px;
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #333;
+    cursor: pointer;
+}
+
+.pagination a:hover {
+    background-color: #eee;
+}
+
+.active {
+    background-color: #007bff;
+    color: #fff;
+}

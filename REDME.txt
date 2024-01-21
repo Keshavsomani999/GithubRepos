@@ -1,0 +1,8 @@
+I use Html,css,javascript to create application
+
+fetching github Api through Fetch function of javascript
+
+you can easily run i will add all edge cses of website
+
+1 Page :- index.Html
+2 Page :- newPage.html

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repositories - Details</title>
+    <link rel="stylesheet" href="./newPage.css">
+   
+</head>
+
+<body>
+
+    <div class="Profilecard">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPlIhCYoXAZDOe2czRySF3Fw5M5-LGwTp-npkryODCQ&s"
+            alt="Profile image" id="rounded-image" class="rounded-image">
+        <div class="info">
+            <h3 id="name" class="name">Name</h3>
+            <p id="bio" class="bio">bio</p>
+            <p class="location">Location</p>
+            <a href="#" class="link">Visit my website</a>
+        </div>
+    </div>
+
+
+    <div id="repositories"></div>
+      
+    <ul class="pagination">
+        <li><a href="#" class="active">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        
+    </ul>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+         
+            const encodedData = localStorage.getItem('repositoriesData');
+
+            if (encodedData) {
+                
+                const decodedData = JSON.parse(encodedData);
+
+                
+                displayData(decodedData);
+            } else {
+                console.error('Data not found in local storage.');
+            }
+        });
+
+        async function userData(username) {
+            
+            const apiUrl = `https://api.github.com/users/${username}`;
+
+            try {
+                 
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+
+                
+                 return response.json();
+
+               
+                
+            } catch (error) {
+               
+                console.error('Error fetching user data:', error);
+                userDataElement.textContent = `Error fetching user data. ${error.message}`;
+            }
+        }
+
+        async function displayData(data) {
+            const repositoriesDiv = document.getElementById('repositories');
+            const roundedimage = document.getElementById('rounded-image');
+            roundedimage.src = data[0].owner.avatar_url;
+            const name = document.getElementById('name')
+            name.textContent = data[0].owner.login
+
+            const userdata = await userData(data[0].owner.login)
+            const bio = document.getElementById('bio');
+            const link = document.querySelector('.link');
+            console.log(userdata.html_url);
+            link.href = userdata.html_url
+            bio.textContent = userdata.bio
+            
+
+
+            console.log(data[0].owner.login, "dataaa");
+            
+            for (const repo of data) {
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('card'); 
+
+               
+                const langData = await getRepoLanguages(repo.languages_url);
+
+               
+                const buttons = Object.keys(langData).map(language => {
+                    const button = document.createElement('button');
+                    button.textContent = language;
+                    return button;
+                });
+
+                
+                cardDiv.innerHTML = `
+            <h2><strong>${repo.name}</strong></h2>
+            <p>${repo.description || 'No description available'}</p>
+        `;
+
+                
+                buttons.forEach(button => cardDiv.appendChild(button));
+
+                repositoriesDiv.appendChild(cardDiv);
+            }
+        }
+
+
+
+        async function getRepoLanguages(languagesUrl) {
+            try {
+                const response = await fetch(languagesUrl);
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+
+                const languages = await response.json();
+                return languages
+            } catch (error) {
+                console.error('Error fetching languages:', error);
+                alert(`Error fetching languages. ${error.message}`);
+            }
+        } 
+
+        function getPageValue(element) {
+           
+            const pageValue = element.textContent;
+            console.log("Clicked on page:", pageValue);
+
+            
+        }
+
+
+
+
+
+
+
+
+
+
+        
+    </script>
+
+</body>
+
+</html>
